@@ -1,4 +1,4 @@
-package com.mahony_ingersoll.CatSpring;
+package com.mahony_ingersoll.CatSpring.RestControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -14,13 +14,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+
+
 @Controller
 public class ImageController {
     
     @Autowired
     ResourceLoader resourceLoader;
 
-    @GetMapping("/Cat")
+
+
+    @GetMapping("/ImageCat")
     public ResponseEntity<Resource> getImage(@RequestParam("catName") Optional<String> catName) throws Exception {
 
         String realCatName = catName.orElse("");
