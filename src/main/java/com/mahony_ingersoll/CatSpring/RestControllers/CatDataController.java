@@ -1,9 +1,15 @@
 package com.mahony_ingersoll.CatSpring.RestControllers;
 
 import com.mahony_ingersoll.CatSpring.Cats.CatData;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.List;
 import java.util.ArrayList;
@@ -22,7 +28,7 @@ public class CatDataController {
         storedCats.add (new CatData(5, "Cassie", "Gray", "Big and Fluffy", "s3://gpi-cats/Cassie.jpg"));
     }
 
-    
+    // Endpoint to return all CatData.    
     @GetMapping("/Cats")
     public List<CatData> getAllCatData()
     {
@@ -34,6 +40,7 @@ public class CatDataController {
         return catDatas;
     }
 
+    // Endpoint just to return one Cat ID.
     @GetMapping("/Cat/{id}")
     public CatData getCatDataById(@PathVariable int id)
     {
@@ -46,5 +53,13 @@ public class CatDataController {
         }
 
         return null;
+    }
+
+    // Endpoint to add new Cats to the "database".
+    @PostMapping("/Cats")
+    public ResponseEntity<CatData> addCatData (@RequestBody CatData catData)
+    {
+        storedCats.add(new CatData(catData.getId(), catData.getName(), catData.getColor(), catData.getBreed(), catData.getImagePath()));
+        return new ResponseEntity<>(catData, HttpStatus.CREATED);
     }
 }
